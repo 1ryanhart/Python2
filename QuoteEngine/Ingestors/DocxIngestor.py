@@ -22,23 +22,22 @@ class DocxIngestor(IngestorInterface):
         
         :param path: the file path to be parsed.
         """
+        try:
+            if not cls.can_ingest(path):
+                raise Exception('cannot ingest file')
+            
+            quotes = []
+            doc = docx.Document(path)
+            for para in doc.paragraphs:
+                if para.text != "":
+                    parsed = para.text.split(' - ')
+                    body_all = parsed[0:len(parsed)-1]
+                    body = ' '.join(body_all)
+                    author = parsed[-1]
 
-        if not cls.can_ingest(path):
-            raise Exception('cannot ingest file')
-        
-        quotes = []
-        doc = docx.Document(path)
-        for para in doc.paragraphs:
-            if para.text != "":
-                parsed = para.text.split(' - ')
-                body_all = parsed[0:len(parsed)-1]
-                body = ' '.join(body_all)
-                author = parsed[-1]
+                    new_quote = QuoteModel(body, author)
+                    quotes.append(new_quote)
 
-                new_quote = QuoteModel(body, author)
-                quotes.append(new_quote)
-
-        return print(f'docx: {quotes}')
-
-# docx_path = '../_data/DogQuotes/DogQuotesDOCx.docx'
-# DocxImporter.parse(docx_path)
+            return quotes
+        except:
+            raise Exception('Error parsing file')

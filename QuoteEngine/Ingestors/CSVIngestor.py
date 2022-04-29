@@ -19,18 +19,17 @@ class CSVIngestor(IngestorInterface):
 
         :param path: the file path to be parsed.
         """
+        try:
+            if not cls.can_ingest(path):
+                raise Exception('cannot ingest file')
+            
+            quotes = []
+            df = pandas.read_csv(path)
 
-        if not cls.can_ingest(path):
-            raise Exception('cannot ingest file')
-        
-        quotes = []
-        df = pandas.read_csv(path)
+            for index, row in df.iterrows():
+                quote = QuoteModel(row['body'], row['author'])
+                quotes.append(quote)
 
-        for index, row in df.iterrows():
-            quote = QuoteModel(row['body'], row['author'])
-            quotes.append(quote)
-
-        return print(f'CSV: {quotes}')
-
-# csv_path = '../_data/DogQuotes/DogQuotesCSV.csv'
-# CSVIngestor.parse(csv_path)
+            return quotes
+        except:
+            raise Exception('Error parsing file')

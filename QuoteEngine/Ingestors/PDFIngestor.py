@@ -8,6 +8,10 @@ from ..QuoteModel import QuoteModel
 
 
 class PDFIngestor(IngestorInterface):
+    """Realises the IngestorInterface abstract base class. Implements specific parse method
+    for .pdf files
+    """
+
     allowed_extensions = ['pdf']
 
     @classmethod
@@ -20,30 +24,29 @@ class PDFIngestor(IngestorInterface):
         
         :param path: the file path to be parsed.
         """
+        try:
+            if not cls.can_ingest(path):
+                raise Exception('cannot ingest file')
+            
+            quotes = []
+            tmp = f'./_data/tmp/{random.randint(0,100000)}.txt'
+            call = subprocess.call(['pdftotext', '-raw', path, tmp])
 
-        if not cls.can_ingest(path):
-            raise Exception('cannot ingest file')
-        
-        quotes = []
-        tmp = f'./_data/tmp/{random.randint(0,100000)}.txt'
-        call = subprocess.call(['pdftotext', '-raw', path, tmp])
+            with open(tmp, 'r') as f:
+                lines = f.readlines()
+                for line in lines:
+                    line = line.strip('\n\r')
+                    if len(line) >0:
+                        parts = line.split(' - ')
+                        author = parts[-1]
+                        body_all = parts[0:len(parts)-1]
+                        body = ' '.join(body_all)
+                        new_quote = QuoteModel(body, author)
+                        quotes.append(new_quote)
 
-        with open(tmp, 'r') as f:
-            lines = f.readlines()
-            for line in lines:
-                line = line.strip('\n\r')
-                if len(line) >0:
-                    parts = line.split(' - ')
-                    author = parts[-1]
-                    body_all = parts[0:len(parts)-1]
-                    body = ' '.join(body_all)
-                    new_quote = QuoteModel(body, author)
-                    quotes.append(new_quote)
-
-        os.remove(tmp)
-        return print(f'pdf: {quotes}')
-
-# pdf_path = '../_data/DogQuotes/DogQuotesPDF.pdf'
-# PDFImporter.parse(pdf_path)
+            os.remove(tmp)
+            return quotes
+        except:
+            raise Exception('Error parsing file')
 
 """THIS WORKS HOWEVER THE END OF THE FILE HAS A STRANGE CHARACTER AND THIS CREATES AN UNWANTED QUOTE INSTANCE: ♀"""

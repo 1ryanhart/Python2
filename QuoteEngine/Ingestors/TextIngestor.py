@@ -8,7 +8,7 @@ class TextIngestor(IngestorInterface):
     """Realises the IngestorInterface abstract base class. Implements specific parse method
     for .txt files
     """
-    
+
     allowed_extensions = ['txt']
 
     @classmethod
@@ -21,28 +21,26 @@ class TextIngestor(IngestorInterface):
         
         :param path: the file path to be parsed.
         """
+        try:
+            if not cls.can_ingest(path):
+                raise Exception('cannot ingest file')
 
-        if not cls.can_ingest(path):
-            raise Exception('cannot ingest file')
-        
-        quotes = []
-        with open(path, 'r') as f:
-            lines = f.readlines()
-            for line in lines:
-                if len(line) ==0:
-                    pass
-                parts = line.split(' - ')
-                author = parts[-1]
-                body_all = parts[0:len(parts)-1]
-                body = ' '.join(body_all)
+            quotes = []
+            with open(path, 'r') as f:
+                lines = f.readlines()
+                for line in lines:
+                    if len(line) ==0:
+                        pass
+                    parts = line.split(' - ')
+                    author = parts[-1]
+                    body_all = parts[0:len(parts)-1]
+                    body = ' '.join(body_all)
 
-                new_quote = QuoteModel(body, author)
-                quotes.append(new_quote)
-        
-        return print(f'text: {quotes}')
+                    new_quote = QuoteModel(body, author)
+                    quotes.append(new_quote)
 
-# txt_path = '../_data/DogQuotes/DogQuotesTXT.txt'
-# TXTImporter.parse(txt_path)
-
+            return quotes
+        except:
+            raise Exception('Error parsing file')
 
 """THIS WORKS HOWEVER THE VERY FIRST QUOTE STARTS WITH THE STRANGE CHARACTERS ï»¿"""

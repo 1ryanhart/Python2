@@ -2,12 +2,12 @@ from typing import List
 
 from .QuoteModel import QuoteModel
 from .IngestorInterface import IngestorInterface
-# from .Ingestors.DocxIngestor import DocxIngestor
-# from .Ingestors.CSVIngestor import CSVIngestor
-# from .Ingestors.PDFIngestor import PDFIngestor
-# from .Ingestors.TextIngestor import TextIngestor
+from .Ingestors.DocxIngestor import DocxIngestor
+from .Ingestors.CSVIngestor import CSVIngestor
+from .Ingestors.PDFIngestor import PDFIngestor
+from .Ingestors.TextIngestor import TextIngestor
 
-from QuoteEngine.Ingestors import DocxIngestor, CSVIngestor, PDFIngestor, TextIngestor
+# from QuoteEngine.Ingestors import DocxIngestor, CSVIngestor, PDFIngestor, TextIngestor
 
 class Ingestor(IngestorInterface):
     """Realises the IngestorInterface abstract base class. Used as a 
