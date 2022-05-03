@@ -29,7 +29,7 @@ class PDFIngestor(IngestorInterface):
                 raise Exception('cannot ingest file')
             
             quotes = []
-            tmp = f'./_data/tmp/{random.randint(0,100000)}.txt'
+            tmp = f'./tmp/{random.randint(0,100000)}.txt'
             call = subprocess.call(['pdftotext', '-raw', path, tmp])
 
             with open(tmp, 'r') as f:
