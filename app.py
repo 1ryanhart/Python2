@@ -23,7 +23,7 @@ def setup():
     quotes_directory = './_data/DogQuotes/'
     for file in os.listdir(quotes_directory):
         quotes.append(Ingestor.parse(f'{quotes_directory}/{file}'))
-    print(quotes)    
+ 
     imgs = []
     images_path = "./_data/photos/dog/"
     for file in os.listdir(images_path):
@@ -54,15 +54,18 @@ def meme_form():
 @app.route('/create', methods=['POST'])
 def meme_post():
     """ Create a user defined meme """
-
-    img = requests.get(request.form['image_url'])
-    with open('./static/download.png', 'wb') as f:
-        f.write(img.content)
-        quote_body = request.form['body']
-        quote_author = request.form['author']
-        path = meme.make_meme('./static/download.png', quote_body, quote_author)
-    
-    os.remove('./static/download.png')
+    try:
+        img = requests.get(request.form['image_url'])
+        with open('./static/download.png', 'wb') as f:
+            f.write(img.content)
+            quote_body = request.form['body']
+            quote_author = request.form['author']
+            path = meme.make_meme('./static/download.png', quote_body, quote_author)
+        
+        os.remove('./static/download.png')
+   
+    except Exception as e:
+        path=''
 
     return render_template('meme.html', path=path)
 
