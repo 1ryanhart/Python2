@@ -1,3 +1,4 @@
 static/
 tmp/*
 !tmp/.placeholder
+test.py
