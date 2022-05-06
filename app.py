@@ -1,3 +1,10 @@
+"""
+Main app run file.
+
+This file runs the Flask app and provides two enpoints
+- / (GET)
+- /create (GET and POST)
+"""
 import random
 import os
 import requests
@@ -12,8 +19,7 @@ meme = MemeEngine('./static')
 
 
 def setup():
-    """ Load all resources """
-
+    """Load all resources."""
     quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
                    './_data/DogQuotes/DogQuotesDOCX.docx',
                    './_data/DogQuotes/DogQuotesPDF.pdf',
@@ -37,8 +43,7 @@ quotes, imgs = setup()
 
 @app.route('/')
 def meme_rand():
-    """ Generate a random meme """
-
+    """Generate a random meme."""
     img = "./_data/photos/dog/" + random.choice(imgs)
     quote = random.choice(quotes)[0]
     path = meme.make_meme(img, quote.body, quote.author)
@@ -48,13 +53,13 @@ def meme_rand():
 
 @app.route('/create', methods=['GET'])
 def meme_form():
-    """ User input for meme information """
+    """User input for meme information."""
     return render_template('meme_form.html')
 
 
 @app.route('/create', methods=['POST'])
 def meme_post():
-    """ Create a user defined meme """
+    """Create a user defined meme."""
     try:
         img = requests.get(request.form['image_url'])
         with open('./static/download.png', 'wb') as f:

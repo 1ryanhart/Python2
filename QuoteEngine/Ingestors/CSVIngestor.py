@@ -1,3 +1,4 @@
+"""Define specific CSV ingestor."""
 from typing import List
 import pandas
 
@@ -6,17 +7,21 @@ from ..QuoteModel import QuoteModel
 
 
 class CSVIngestor(IngestorInterface):
-    """Realises the IngestorInterface abstract base class.
-    Implements specific parse method for .csv files
+    """
+    Realise the IngestorInterface abstract base class.
+
+    Implement specific parse method for .csv files.
     """
 
     allowed_extensions = ['csv']
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        """Parses the .csv file to extract quotes. Instantiates
-        QuoteModel objects for each quote.
-        Returns list of all QuoteModel Objects created from the file.
+        """
+        Parse the .csv file to extract quotes.
+        
+        Instantiate QuoteModel objects for each quote.
+        Return list of all QuoteModel Objects created from the file.
 
         :param path: the file path to be parsed.
         """

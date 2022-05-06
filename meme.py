@@ -1,3 +1,9 @@
+"""
+Generates memes.
+
+If this file is ran directly, it allows the generate_meme
+function to be ran through the terminal.
+"""
 import os
 import random
 import argparse
@@ -8,7 +14,7 @@ from QuoteEngine.QuoteModel import QuoteModel
 
 
 def generate_meme(path=None, body=None, author=None):
-    """ Generate a meme given an path and a quote """
+    """Generate a meme given an path and a quote."""
     img = None
     quote = None
 

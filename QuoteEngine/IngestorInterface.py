@@ -1,15 +1,19 @@
+"""Define IngestorInterface class."""
 from abc import ABC, abstractmethod
 
 
 class IngestorInterface(ABC):
-    """An abstract base class for other specific
-    child Ingestors to inherit from"""
+    """
+    Define abstract base class.
+    
+    Other specific child Ingestors to inherit this class.
+    """
+
     allowed_extensions = []
 
     @classmethod
     def can_ingest(cls, path) -> bool:
-        """Tests to see if the path extension
-        is in the allowed_extensions list.
+        """Test if the path extension is in the allowed_extensions list.
 
         For example, for the PDFIngestor child, the
         allowed extensions_list is ['pdf']. Hence, if the
@@ -24,4 +28,5 @@ class IngestorInterface(ABC):
     @classmethod
     @abstractmethod
     def parse(cls, path: str):
+        """Define placeholder function to parse the file."""
         pass

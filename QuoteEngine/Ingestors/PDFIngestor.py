@@ -1,3 +1,4 @@
+"""Define specific pdf ingestor."""
 import subprocess
 import os
 import random
@@ -8,17 +9,19 @@ from ..QuoteModel import QuoteModel
 
 
 class PDFIngestor(IngestorInterface):
-    """Realises the IngestorInterface abstract base class.
-    Implements specific parse method for .pdf files
+    """Realise the IngestorInterface abstract base class.
+
+    Implement specific parse method for .pdf files.
     """
 
     allowed_extensions = ['pdf']
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        """Parses the .pdf file to extract quotes. Instantiates
-        QuoteModel objects for each quote. Returns list of all
-        QuoteModel Objects created from the file.
+        """Parse the .pdf file to extract quotes.
+
+        Instantiate QuoteModel objects for each quote.
+        Return list of all QuoteModel Objects created from the file.
 
         This method splits on a ' - '. However the method enables
         the quotes themselves to contain the characters ' - '
