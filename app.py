@@ -23,13 +23,14 @@ def setup():
     quotes_directory = './_data/DogQuotes/'
     for file in os.listdir(quotes_directory):
         quotes.append(Ingestor.parse(f'{quotes_directory}/{file}'))
- 
+
     imgs = []
     images_path = "./_data/photos/dog/"
     for file in os.listdir(images_path):
         imgs.append(file)
 
     return quotes, imgs
+
 
 quotes, imgs = setup()
 
@@ -60,12 +61,13 @@ def meme_post():
             f.write(img.content)
             quote_body = request.form['body']
             quote_author = request.form['author']
-            path = meme.make_meme('./static/download.png', quote_body, quote_author)
-        
+            path = meme.make_meme('./static/download.png',
+                                  quote_body, quote_author)
+
         os.remove('./static/download.png')
-   
+
     except Exception as e:
-        path=''
+        path = ''
 
     return render_template('meme.html', path=path)
 

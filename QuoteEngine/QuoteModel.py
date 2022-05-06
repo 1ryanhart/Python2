@@ -9,6 +9,6 @@ class QuoteModel():
         """
         self.body = body
         self.author = author
-    
+
     def __repr__(self) -> str:
         return f'{self.body} - {self.author}'

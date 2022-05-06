@@ -6,15 +6,16 @@ from ..QuoteModel import QuoteModel
 
 
 class CSVIngestor(IngestorInterface):
-    """Realises the IngestorInterface abstract base class. Implements specific parse method
-    for .csv files
+    """Realises the IngestorInterface abstract base class.
+    Implements specific parse method for .csv files
     """
 
     allowed_extensions = ['csv']
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        """Parses the .csv file to extract quotes. Instantiates QuoteModel objects for each quote.
+        """Parses the .csv file to extract quotes. Instantiates
+        QuoteModel objects for each quote.
         Returns list of all QuoteModel Objects created from the file.
 
         :param path: the file path to be parsed.
@@ -22,7 +23,7 @@ class CSVIngestor(IngestorInterface):
         try:
             if not cls.can_ingest(path):
                 raise Exception('cannot ingest file')
-            
+
             quotes = []
             df = pandas.read_csv(path)
 
@@ -31,5 +32,5 @@ class CSVIngestor(IngestorInterface):
                 quotes.append(quote)
 
             return quotes
-        except:
+        except Exception:
             raise Exception('Error parsing file')

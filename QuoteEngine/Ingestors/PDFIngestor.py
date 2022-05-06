@@ -8,26 +8,27 @@ from ..QuoteModel import QuoteModel
 
 
 class PDFIngestor(IngestorInterface):
-    """Realises the IngestorInterface abstract base class. Implements specific parse method
-    for .pdf files
+    """Realises the IngestorInterface abstract base class.
+    Implements specific parse method for .pdf files
     """
 
     allowed_extensions = ['pdf']
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        """Parses the .pdf file to extract quotes. Instantiates QuoteModel objects for each quote.
-        Returns list of all QuoteModel Objects created from the file.
+        """Parses the .pdf file to extract quotes. Instantiates
+        QuoteModel objects for each quote. Returns list of all
+        QuoteModel Objects created from the file.
 
-        This method splits on a ' - '. However the method enables the quotes themselves
-        to contain the characters ' - ' 
-        
+        This method splits on a ' - '. However the method enables
+        the quotes themselves to contain the characters ' - '
+
         :param path: the file path to be parsed.
         """
         try:
             if not cls.can_ingest(path):
                 raise Exception('cannot ingest file')
-            
+
             quotes = []
             tmp = f'./tmp/{random.randint(0,100000)}.txt'
             call = subprocess.call(['pdftotext', '-raw', path, tmp])
@@ -36,7 +37,7 @@ class PDFIngestor(IngestorInterface):
                 lines = f.readlines()
                 for line in lines:
                     line = line.strip('\n\r')
-                    if len(line) >0:
+                    if len(line) > 0:
                         parts = line.split(' - ')
                         author = parts[-1]
                         body_all = parts[0:len(parts)-1]
@@ -46,5 +47,5 @@ class PDFIngestor(IngestorInterface):
 
             os.remove(tmp)
             return quotes
-        except:
+        except Exception:
             raise Exception('Error parsing file')
