@@ -43,7 +43,6 @@ class MemeEngine():
 
         x, y = 20, random.randint(0, int(0.6*height))
 
-
         tint_colour = (0, 0, 0)
         transparency = 0.50
         opacity = int(225 * transparency)
