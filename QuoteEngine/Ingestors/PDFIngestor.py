@@ -32,7 +32,7 @@ class PDFIngestor(IngestorInterface):
             tmp = f'./tmp/{random.randint(0,100000)}.txt'
             call = subprocess.call(['pdftotext', '-raw', path, tmp])
 
-            with open(tmp, 'r') as f:
+            with open(tmp, 'r', encoding='utf-8-sig') as f:
                 lines = f.readlines()
                 for line in lines:
                     line = line.strip('\n\r')
@@ -48,5 +48,3 @@ class PDFIngestor(IngestorInterface):
             return quotes
         except:
             raise Exception('Error parsing file')
-
-"""THIS WORKS HOWEVER THE END OF THE FILE HAS A STRANGE CHARACTER AND THIS CREATES AN UNWANTED QUOTE INSTANCE: ♀"""

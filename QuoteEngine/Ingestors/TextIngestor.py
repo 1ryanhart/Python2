@@ -26,7 +26,7 @@ class TextIngestor(IngestorInterface):
                 raise Exception('cannot ingest file')
 
             quotes = []
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8-sig') as f:
                 lines = f.readlines()
                 for line in lines:
                     if len(line) ==0:
@@ -42,5 +42,3 @@ class TextIngestor(IngestorInterface):
             return quotes
         except:
             raise Exception('Error parsing file')
-
-"""THIS WORKS HOWEVER THE VERY FIRST QUOTE STARTS WITH THE STRANGE CHARACTERS ï»¿"""
