@@ -1,4 +1,4 @@
 static/
 tmp/*
 !tmp/.placeholder
-./test.py
+test.py
